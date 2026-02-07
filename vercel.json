@@ -1,5 +1,6 @@
 {
-    "buildCommand": "uvicorn src.api.index:app --reload",
+    "installCommand": "pip install -r requirements.txt",
+    "devCommand": "uvicorn src.api.index:app --host 0.0.0.0 --port $PORT",
     "outputDirectory": "src/api",
     "env": {
         "PYTHON_VERSION": "3.13"
