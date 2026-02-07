@@ -8,7 +8,7 @@
     "functions": {
         "src/api/index.py": {
             "maxDuration": 60,
-            "runtime": "python3.13"
+            "runtime": "python@3.13.1"
         }
     },
     "rewrites": [
