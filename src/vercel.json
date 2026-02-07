@@ -6,15 +6,15 @@
         "PYTHON_VERSION": "3.13"
     },
     "functions": {
-        "src/api/index.py": {
-            "maxDuration": 60,
-            "runtime": "python@3.13.1"
+        "api/index.py": {
+            "memory": 2048,
+            "maxDuration": 60
         }
     },
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/src/api/index.py"
+            "destination": "/api/index.py"
         }
     ]
 }
