@@ -56,7 +56,7 @@ async def scan(req:ScanRequestSchema,user=Depends(get_current_user)):
         nutrition_estimate=vision_response.nutrition_estimate
     )
 
-@router.post("/comapre")
+@router.post("/compare")
 async def compare(req:CompareRequestSchema,user=Depends(get_current_user)):
     scan_1,scan_2 = await asyncio.gather(
         scan_image_async(req.url1),
