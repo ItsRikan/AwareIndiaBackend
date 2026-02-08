@@ -83,3 +83,6 @@ class CompareModelOutputSchema(BaseModel):
 class CompareOutputSchema(CompareModelOutputSchema):
     url1:str=Field(...)
     url2:str=Field(...)
+
+class ConfirmRequest(BaseModel):
+    token:str
