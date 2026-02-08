@@ -84,7 +84,7 @@ async def login(data:LoginSchema):
     except AuthApiError as e:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail=str(e))
 @router.post('/confirm')
-def confirm_email(payload: ConfirmRequest):
+async def confirm_email(payload: ConfirmRequest):
     try:
         return {
             "success": True,

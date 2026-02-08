@@ -37,7 +37,7 @@ async def insert_into_history(
         print(f"Error inserting history: {e}")
         raise
 @router.get("/history")
-def get_recent_history(user=Depends(get_current_user)):
+async def get_recent_history(user=Depends(get_current_user)):
     try:
         history = supabase.table('history').select("*").eq("user",user.id).order("created_at").execute()
         return history.data[:10]
