@@ -10,7 +10,7 @@ from src.routers import imagekit_auth,auth,scan,history
 
 app = FastAPI()
 
-origins = ["*","http://localhost:8080/"]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
