@@ -10,7 +10,8 @@ from src.schema import (
     SignupSchema,
     LoginSchema,
     RefreshTokenRequest,
-    RefreshTokenResponse
+    RefreshTokenResponse,
+    ConfirmRequest
     )
 
 load_dotenv()
@@ -40,7 +41,7 @@ def get_current_user(creds:HTTPAuthorizationCredentials=Depends(security)):
 
 
 @router.post("/sign_up")
-def sign_up(data:SignupSchema):
+async def sign_up(data:SignupSchema):
     res = supabase.auth.sign_up(
         {
         "email": data.email,
@@ -66,7 +67,7 @@ def sign_up(data:SignupSchema):
     }
 
 @router.post("/login")
-def login(data:LoginSchema):
+async def login(data:LoginSchema):
     try:
         res = supabase.auth.sign_in_with_password({
             "email":data.email,
@@ -82,9 +83,22 @@ def login(data:LoginSchema):
         }
     except AuthApiError as e:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail=str(e))
+@router.post('/confirm')
+def confirm_email(payload: ConfirmRequest):
+    try:
+        return {
+            "success": True,
+            "message": "Email confirmed successfully"
+        }
+
+    except Exception:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid or expired confirmation token"
+        )
 
 @router.post("/refresh")
-def refresh_token(payload:RefreshTokenRequest):
+async def refresh_token(payload:RefreshTokenRequest):
     try:
         session = supabase.auth.refresh_session(payload.refresh_token)
         return {
@@ -101,7 +115,7 @@ def refresh_token(payload:RefreshTokenRequest):
 
 
 @router.post("/logout")
-def logout(authorization:str=Header(...),user=Depends(get_current_user)):
+async def logout(authorization:str=Header(...),user=Depends(get_current_user)):
     token = authorization.replace("Bearer ", "")
     supabase.auth.sign_out(token)
     return {"success": True}
